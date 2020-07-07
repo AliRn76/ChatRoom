@@ -1,0 +1,38 @@
+
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'mobile_login/style.css' %}">
+    <title>login/signup form animation</title>
+</head>
+<body>
+<div class="form-structor">
+    <div class="signup">
+        <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
+        <div class="form-holder">
+            <input type="text" name="username" required="required" class="input" placeholder="Username" />
+            <input type="email" name="email" class="input" placeholder="Email" />
+            <input type="password" name="password"  required="required" class="input" placeholder="Password" />
+        </div>
+        <button class="submit-btn">Sign up</button>
+    </div>
+    <div class="login slide-up">
+        <form class="center" method="POST" action="{% url 'login' %}">{% csrf_token %}
+            <h2 class="form-title" id="login"><span>or</span>Log in</h2>
+            <div class="form-holder">
+                <input type="text" name="username" required="required" class="input" placeholder="Username" />
+                <input type="password" name="password"  required="required" class="input" placeholder="Password" />
+            </div>
+            <button class="submit-btn" type="submit">Log in</button>
+        </form>
+    </div>
+</div>
+</body>
+<script src="{% static 'mobile_login/jquery-3.4.1.min.js' %}"></script>
+<script src="{% static 'mobile_login/js.js' %}"></script>
+</html>

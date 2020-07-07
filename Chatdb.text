@@ -1,0 +1,42 @@
+Create Table auth_user(
+	id int Not Null Primary Key Auto_Increment,
+	Password varchar(128),
+	last_login datetime(6),
+	is_superuser tinyint(1),
+	username varchar(150),
+	first_name varchar(30),
+	last_name varchar(150),
+	email varchar(254),
+	is_staff tinyint(1),
+	is_active tinyint(1),
+	date_joined datetime(6)
+);
+
+Create Table Room(
+	ID int Not Null Primary Key Auto_Increment,
+	RoomName varchar(64),
+	MemberCount int,
+	Pv boolean Default False,
+	UnreadCount int Default 0
+);
+
+
+Create Table Chat(
+	ID int Not Null Primary Key Auto_Increment,
+	UserID int,
+	Message text,
+	RoomID int,
+	Datetime datetime,
+	Unread boolean Default False,
+	Image varchar(255),
+	Foreign Key (UserID) References auth_user(id),
+	Foreign Key (RoomID) References Room(ID)
+);
+
+Create Table Member(
+	ID int Not Null Primary Key Auto_Increment,
+	UserID int,
+	RoomID int,
+	Foreign Key (UserID) References auth_user(id),
+	Foreign Key (RoomID) References Room(ID)
+);

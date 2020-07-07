@@ -1,5 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth.models import User
+from django.utils.datetime_safe import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 
@@ -28,7 +30,51 @@ def my_view(request):
     # Device properties
     print(request.user_agent.device ) # returns Device(family='iPhone')
     print(request.user_agent.device.family)  # returns 'iPhone'
+    return HttpResponse("User is mobile: <b>"           + str(request.user_agent.is_mobile)             + "</b><br><br>" +
+                        "User is tablet: <b>"           + str(request.user_agent.is_tablet)             + "</b><br><br>" +
+                        "User is touch capable: <b>"    + str(request.user_agent.is_touch_capable)      + "</b><br><br>" +
+                        "User is pc: <b>"               + str(request.user_agent.is_pc)                 + "</b><br><br>" +
+                        "User is bot: <b>"              + str(request.user_agent.is_bot)                + "</b><br><br>" +
+                        "User browser: <b>"             + str(request.user_agent.browser)               + "</b><br><br>" +
+                        "User borwser family: <b>"      + str(request.user_agent.browser.family)        + "</b><br><br>" +
+                        "User browser version: <b>"     + str(request.user_agent.browser.version_string)+ "</b><br><br>" +
+                        "User os: <b>"                  + str(request.user_agent.os.family)             + "</b><br><br>" +
+                        "User os version: <b>"          + str(request.user_agent.os.version_string)     + "</b><br><br>")
 
+
+def main_view(request):
+    try:
+        print("Welcome " + request.user.username)
+        # with open('log.txt', 'a') as file:
+        #     data = str(datetime.now()) + " Welcome " + request.user.username + "\n"
+        #     file.write(data)
+
+        context = {
+            "name": request.user.first_name,
+        }
+
+    except:
+        if request.user_agent.is_pc:
+            # return HttpResponse("It's Desktop Login")
+            return render(request, "desktop_login.html", {})
+        else:
+            print("It's Mobile & Tablet Login")
+            return render(request, "mobile_login.html", {})
+            # return HttpResponse("It's Mobile & Tablet Login")
+        # return render(request, "login.html", {})
+
+    # return render(request, "main.html", context)
+    return HttpResponse("Hello " + str(request.user.username))
+
+
+def logout_view(request):
+    print("Bye " + request.user.username)
+    # with open('log.txt', 'a') as file:
+    #     data = str(datetime.now()) + " Bye " + request.user.username + "\n"
+    #     file.write(data)
+
+    logout(request)
+    return redirect("/")
 
 def singup_view(request):
     pass

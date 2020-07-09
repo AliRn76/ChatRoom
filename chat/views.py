@@ -53,7 +53,7 @@ def main_view(request):
         }
 
     except:
-        if not request.user_agent.is_pc:
+        if request.user_agent.is_pc:
             form = SingupForm(request.POST or None)
             if request.method == "POST":
                 user = User

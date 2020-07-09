@@ -27,8 +27,6 @@
         <form method="POST">{% csrf_token %}
           <div class="form-group">
             {{ form }}
-<!--            <input type="text" placeholder="username" />-->
-<!--            <input type="password" placeholder="password" />-->
           </div>
           <div class="form-group"></div>
           <div class="form-group"></div>
@@ -42,7 +40,7 @@
     <div class="right">
       <div class="content">
         <h2>Login</h2>
-        <form method="post" method="POST" action="{% url 'login' %}">{% csrf_token %}
+        <form method="post" method="POST" action="{% url 'desktop_login' %}">{% csrf_token %}
           <div class="form-group">
             <label for="username" class="form-label">Username</label>
             <input type="text" name="username" id="username" required="required"  />

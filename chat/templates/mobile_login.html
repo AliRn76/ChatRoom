@@ -12,17 +12,19 @@
 </head>
 <body>
 <div class="form-structor">
-    <div class="signup">
+    <form class="signup" method="POST">{% csrf_token %}
         <h2 class="form-title" id="signup"><span>or</span>Sign up</h2>
         <div class="form-holder">
-            <input type="text" name="username" required="required" class="input" placeholder="Username" />
-            <input type="email" name="email" class="input" placeholder="Email" />
-            <input type="password" name="password"  required="required" class="input" placeholder="Password" />
+            {{ form }}
+<!--            <input type="text" name="username" required="required" class="input" placeholder="Username" />-->
+<!--            <input type="email" name="email" class="input" placeholder="Email" />-->
+<!--            <input type="password" name="password"  required="required" class="input" placeholder="Password" />-->
+<!--            <input type="password" name="password"  required="required" class="input" placeholder="Password" />-->
         </div>
-        <button class="submit-btn">Sign up</button>
-    </div>
+        <button class="submit-btn" type="submit">Sign up</button>
+    </form>
     <div class="login slide-up">
-        <form class="center" method="POST" action="{% url 'login' %}">{% csrf_token %}
+        <form class="center" method="POST" action="{% url 'mobile_login' %}">{% csrf_token %}
             <h2 class="form-title" id="login"><span>or</span>Log in</h2>
             <div class="form-holder">
                 <input type="text" name="username" required="required" class="input" placeholder="Username" />

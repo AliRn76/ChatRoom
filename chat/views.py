@@ -5,6 +5,8 @@ from django.utils.datetime_safe import datetime
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import logout
 
+from chat.forms import SingupForm
+
 
 def my_view(request):
 
@@ -45,18 +47,33 @@ def my_view(request):
 def main_view(request):
     try:
         print("Welcome " + request.user.username)
-        # with open('log.txt', 'a') as file:
-        #     data = str(datetime.now()) + " Welcome " + request.user.username + "\n"
-        #     file.write(data)
-
+        # If taraf First_name nadasht --> Login nashode
         context = {
             "name": request.user.first_name,
         }
 
     except:
         if request.user_agent.is_pc:
-            # return HttpResponse("It's Desktop Login")
-            return render(request, "desktop_login.html", {})
+            form = SingupForm(request.POST or None)
+            if request.method == "POST":
+                user = User
+                print("* YE CHIZI POST SHOD")
+                if form.is_valid():
+                    print("* FORM WAS VALID")
+                    user.first_name = form.cleaned_data.get("first_name")
+                    user.last_name = form.cleaned_data.get("last_name")
+                    user.username = form.cleaned_data.get("username")
+                    user.password = form.cleaned_data.get("password")
+                    user.objects.create_user(user.username, "", user.password, first_name=user.first_name,
+                                             last_name=user.last_name, is_staff=True)
+                    print("* User Create Successfully")
+                else:
+                    print("* FORM WAS INVALID")
+                    print(form.errors)
+            context = {
+                "form": form
+            }
+            return render(request, "desktop_login.html", context)
         else:
             print("It's Mobile & Tablet Login")
             return render(request, "mobile_login.html", {})
@@ -64,7 +81,7 @@ def main_view(request):
         # return render(request, "login.html", {})
 
     # return render(request, "main.html", context)
-    return HttpResponse("Hello " + str(request.user.username))
+    return HttpResponse("Hello " + request.user.username)
 
 
 def logout_view(request):

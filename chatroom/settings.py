@@ -25,8 +25,9 @@ SECRET_KEY = 'ximw#pf2-+no-vi7din!b&pt9_p6c3wec=g8yr#!s+o#a^tkz2'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
+LOGIN_REDIRECT_URL = 'main'
 
 # Application definition
 
